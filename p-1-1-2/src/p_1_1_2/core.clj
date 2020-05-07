@@ -8,11 +8,13 @@
 
 
 (defn update-state [state]
-  {:segment-count 24})
+  {:segment-count
+   ((or (q/key-as-keyword) :3)
+    { :1 360, :2 45 :3 24 :4 12 :5 6 })})
 
 
 (defn draw-state [state]
-  (def radius (/ (q/width) 2))
+  (def radius (/ (or (q/width) 0) 2))
 
   (q/color-mode :hsb 360 radius radius)
   (q/background 360)
@@ -27,7 +29,7 @@
      (+ (* (q/cos (q/radians angle)) radius) radius)
      (+ (* (q/sin (q/radians angle)) radius) radius))
     
-    (q/fill angle (q/mouse-x) (q/mouse-y)))
+    (q/fill angle (or (q/mouse-x) 0) (or (q/mouse-y) 0)))
   
   (q/end-shape))
 
